@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="marquee.js"></script>
+
+    <title>Vanilla JS Marquee</title>
+</head>
+<body>
+
+<div class="container">
+	<header>
+		<h1>Vanilla Javascript Marquee</h1>
+		<span class="tagline">by Robert Bossaert</span>
+	</header>
+
+	<!-- De Lorean Ipsum -->
+	<h3>Default</h3>
+	<div id="marqueeOne" class="example" style="width:200px">
+		You have this thing hooked up to the car? Ahh. Ahh. What's a rerun? Good. 
+	</div>
+
+	<h3>Different direction</h3>
+	<div id="marqueeTwo" class="example" style="width:400px">
+		Have a good trip Einstein, watch your head. I'm too loud. I can't believe it. I'm never gonna get a chance to play in front of anybody.
+	</div>
+
+	<h3>Different speed</h3>
+	<div id="marqueeThree" class="example" style="width:800px">
+		Listen, Doc. No no no, Doc, I just got here, okay, Jennifer's here, we're gonna take the new truck for a spin. Evening, Doctor Brown, what's with the wire? Weight has nothing to do with it. That's right, he's gonna be mayor.
+	</div>
+
+	<h2>Options</h2>
+	<pre>new Marquee(<span class="string">'element'</span>, { direction: <span class="string">'rtl'</span>, speed: <span class="number">1</span> });</pre>
+</div>
+
+<script>
+	
+	new Marquee('marqueeOne');
+
+	new Marquee('marqueeTwo', {
+		direction: 'rtl',
+	});
+
+	new Marquee('marqueeThree', {
+		speed: 1,
+	});
+
+</script>
+
+</body>
+</html>
