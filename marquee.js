@@ -74,7 +74,7 @@ var Marquee = function (element, defaults) {
 	this.start = function () {
         process = window.setInterval(function () {
            self.play();
-        });
+        }, 10);
     };
 
 	this.play = function() {
