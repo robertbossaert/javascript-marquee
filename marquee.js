@@ -29,6 +29,9 @@ var Marquee = function (element, defaults) {
 		ltrCond			= 0,
 		loopCnt 		= 0,
 		start			= 0,
+		textcolor		= options.textcolor 	||"#000000", // Define the Text Color
+		bgcolor			= options.bgcolor	||"#ffffff", 	// Define the BackGroundColor
+		opacity			= options.opacity	||1.0,
 		process 		= null,
 		constructor	 	= function (elem) {
 
@@ -44,6 +47,9 @@ var Marquee = function (element, defaults) {
             elem.style.overflow = 'hidden';
             marqueeElem.style.whiteSpace = 'nowrap';
             marqueeElem.style.position = 'relative';
+            marqueeElem.style.color= textcolor;
+            marqueeElem.style.backgroundColor= bgcolor;
+            marqueeElem.style.opacity= opacity;
 
             if (continuous === true) {
                 marqueeElem.innerHTML += elemHTML;

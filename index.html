@@ -31,6 +31,12 @@
 	<div id="marqueeThree" class="example" style="width:800px">
 		Listen, Doc. No no no, Doc, I just got here, okay, Jennifer's here, we're gonna take the new truck for a spin. Evening, Doctor Brown, what's with the wire? Weight has nothing to do with it. That's right, he's gonna be mayor.
 	</div>
+	
+	<h3>Different Colors And Opacity</h3>
+	<div id="marqueeFour" class="example" style="width:200px">
+Nobody calls me chicken! He's in the old west, but he's alive!
+	</div>
+
 
 	<h2>Options</h2>
 	<pre>new Marquee(<span class="string">'element'</span>, { direction: <span class="string">'rtl'</span>, speed: <span class="number">1</span> });</pre>
@@ -46,7 +52,14 @@
 
 	new Marquee('marqueeThree', {
 		speed: 1,
+		
 	});
+	new Marquee('marqueeFour', {
+		bgcolor:'tomato',
+		textcolor:'powder',
+		opacity:.7,	
+	});
+
 
 </script>
 
