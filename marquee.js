@@ -1,9 +1,9 @@
 /*
 	Vanilla Javascript Marquee
-	Version: 0.1.0
+	Version: 0.1.1
 	Author: Robert Bossaert <https://github.com/robertbossaert>
 	Example call:
-	
+
 	new Marquee('element');
 
 	new Marquee('element', {
@@ -11,97 +11,95 @@
 	});
 */
 var Marquee = function (element, defaults) {
-	"use strict";
+  'use strict';
 
-	var elem			= document.getElementById(element),
-		options         = (defaults === undefined) ? {} : defaults,
-		continuous		= options.continuous 	|| true,	// once or continuous
-		delayAfter 		= options.delayAfter 	|| 1000,	// pause between loops
-		delayBefore		= options.delayBefore 	|| 0,		// when to start
-		direction 		= options.direction 	|| 'ltr', 	// ltr or rtl
-		loops			= options.loops			|| -1,
-		speed			= options.speed			|| 0.5,
-		timer 			= null,
-		milestone		= 0,
-		marqueeElem		= null,
-		elemWidth		= null,
-		self 			= this,
-		ltrCond			= 0,
-		loopCnt 		= 0,
-		start			= 0,
-		textcolor		= options.textcolor 	||"#000000", // Define the Text Color
-		bgcolor			= options.bgcolor	||"#ffffff", 	// Define the BackGroundColor
-		opacity			= options.opacity	||1.0,
-		process 		= null,
-		constructor	 	= function (elem) {
+  var elem = document.getElementById(element),
+    options = (defaults === undefined) ? {} : defaults,
+    continuous = options.continuous || true,	// once or continuous
+    delayAfter = options.delayAfter || 1000,	// pause between loops
+    delayBefore = options.delayBefore || 0,		// when to start
+    direction = options.direction || 'ltr', 	// ltr or rtl
+    loops = options.loops || -1,
+    speed = options.speed || 0.5,
+    timer = null,
+    milestone = 0,
+    marqueeElem = null,
+    elemWidth = null,
+    self = this,
+    ltrCond = 0,
+    loopCnt = 0,
+    start = 0,
+    textcolor = options.textcolor || '#000000', // Define the text color
+    bgcolor = options.bgcolor || '#ffffff', // Define the background color
+    opacity = options.opacity || 1.0,
+    process = null,
+    constructor = function (elem) {
 
-			// Build html
-			var elemHTML = elem.innerHTML,
-                elemNode = elem.childNodes[1] || elem;
+      // Build html
+      var elemHTML = elem.innerHTML;
+      var elemNode = elem.childNodes[1] || elem;
+      elemWidth = elemNode.offsetWidth;
+      marqueeElem = '<div>' + elemHTML + '</div>';
+      elem.innerHTML = marqueeElem;
+      marqueeElem = elem.getElementsByTagName('div')[0];
+      elem.style.overflow = 'hidden';
+      marqueeElem.style.whiteSpace = 'nowrap';
+      marqueeElem.style.position = 'relative';
+      marqueeElem.style.color = textcolor;
+      marqueeElem.style.backgroundColor = bgcolor;
+      marqueeElem.style.opacity = opacity;
 
-            elemWidth = elemNode.offsetWidth;
+      if (continuous === true) {
+        marqueeElem.innerHTML += elemHTML;
+        marqueeElem.style.width = '200%';
 
-            marqueeElem = '<div>' + elemHTML + '</div>';
-            elem.innerHTML = marqueeElem;
-            marqueeElem = elem.getElementsByTagName('div')[0];
-            elem.style.overflow = 'hidden';
-            marqueeElem.style.whiteSpace = 'nowrap';
-            marqueeElem.style.position = 'relative';
-            marqueeElem.style.color= textcolor;
-            marqueeElem.style.backgroundColor= bgcolor;
-            marqueeElem.style.opacity= opacity;
+        if (direction === 'ltr') {
+          start = -elemWidth;
+        }
+      } else {
+        ltrCond = elem.offsetWidth;
 
-            if (continuous === true) {
-                marqueeElem.innerHTML += elemHTML;
-                marqueeElem.style.width = '200%';
+        if (direction === 'rtl') {
+          milestone = ltrCond;
+        }
+      }
 
-                if (direction === 'ltr') {
-                    start = -elemWidth;
-                }
-            } else {
-                ltrCond = elem.offsetWidth;
+      if (direction === 'ltr') {
+        milestone = -elemWidth;
+      } else if (direction === 'rtl') {
+        speed = -speed;
+      }
 
-                if (direction === 'rtl') {
-                    milestone = ltrCond;
-                }
-            }
+      self.start();
 
-            if (direction === 'ltr') {
-                milestone = -elemWidth;
-            } else if (direction === 'rtl') {
-                speed = -speed;
-            }
+      return marqueeElem;
+    }
 
-			self.start();
+  this.start = function () {
+    process = window.setInterval(function () {
+      self.play();
+    });
+  };
 
-			return marqueeElem;
-		}
+  this.play = function () {
+    // beginning
+    marqueeElem.style.left = start + 'px';
+    start = start + speed;
 
-	this.start = function () {
-        process = window.setInterval(function () {
-           self.play();
-        });
-    };
+    if (start > ltrCond || start < -elemWidth) {
+      start = milestone;
+      loopCnt++;
 
-	this.play = function() {
-		// beginning
-		marqueeElem.style.left = start + 'px';
-		start = start + speed;
+      if (loops !== -1 && loopCnt >= loops) {
+        marqueeElem.style.left = 0;
+      }
+    }
+  }
 
-		if (start > ltrCond || start < -elemWidth) {
-		    start = milestone;
-		    loopCnt++;
+  this.end = function () {
+    window.clearInterval(process);
+  }
 
-		    if (loops !== -1 && loopCnt >= loops) {
-		        marqueeElem.style.left = 0;
-		    }
-		}
-	}
-
-	this.end = function() {
-        window.clearInterval(process);
-	}
-
-	// Init plugin
-	marqueeElem = constructor(elem);
+  // Init plugin
+  marqueeElem = constructor(elem);
 }
