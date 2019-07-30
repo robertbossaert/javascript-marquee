@@ -1,6 +1,6 @@
 /*
 	Vanilla Javascript Marquee
-	Version: 0.2.0
+	Version: 0.2.1
 	Author: Robert Bossaert <https://github.com/robertbossaert>
 	Example call:
 
@@ -11,17 +11,12 @@
 	});
 */
 var Marquee = function (element, defaults) {
-  'use strict';
-
   var elem = document.getElementById(element),
     options = (defaults === undefined) ? {} : defaults,
     continuous = options.continuous || true,	// once or continuous
-    delayAfter = options.delayAfter || 1000,	// pause between loops
-    delayBefore = options.delayBefore || 0,		// when to start
     direction = options.direction || 'ltr', 	// ltr or rtl
     loops = options.loops || -1,
     speed = options.speed || 0.5,
-    timer = null,
     milestone = 0,
     marqueeElem = null,
     elemWidth = null,
@@ -49,7 +44,7 @@ var Marquee = function (element, defaults) {
       marqueeElem.style.backgroundColor = bgcolor;
       marqueeElem.style.opacity = opacity;
 
-      if (continuous === true) {
+      if (continuous) {
         marqueeElem.innerHTML += elemHTML;
         marqueeElem.style.width = '200%';
 
